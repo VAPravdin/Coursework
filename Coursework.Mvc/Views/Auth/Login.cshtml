@@ -1,0 +1,27 @@
+﻿@model LoginRequest
+
+@{
+    ViewData["Title"] = "Login";
+}
+<link rel="stylesheet" href="~/css/site.css" />
+
+<div class="login">
+    <form asp-action="Login" method="post">
+        <h2>Login</h2>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div>
+            <label asp-for="Email"></label>
+            <input asp-for="Email" class="form-input" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label asp-for="Password"></label>
+            <input asp-for="Password" type="password" class="form-input" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="form-button">Login</button>
+    </form>
+</div>

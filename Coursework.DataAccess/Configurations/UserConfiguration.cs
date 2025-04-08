@@ -21,7 +21,7 @@ namespace Coursework.DataAccess.Configurations
 
             builder.Property(x => x.PasswordHash)
                 .IsRequired()
-                .HasMaxLength(30);
+                .HasMaxLength(100);
 
             builder.Property(x => x.Email)
                 .IsRequired()

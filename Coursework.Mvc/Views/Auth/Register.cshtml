@@ -1,0 +1,71 @@
+﻿@model RegisterRequest
+
+@{
+    ViewData["Title"] = "Register";
+}
+<link rel="stylesheet" href="~/css/site.css" />
+<div class="register">
+    <form asp-action="Register" method="post" id="registerForm">
+        <h2>Register</h2>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div>
+            <label asp-for="Username"></label>
+            <input asp-for="Username" class="form-input" />
+            <span asp-validation-for="Username" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label asp-for="Email"></label>
+            <input asp-for="Email" class="form-input" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label asp-for="Password"></label>
+            <input asp-for="Password" type="password" class="form-input" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label>
+                <input type="checkbox" id="IsAdminCheckbox" name="IsAdmin" value="true" />
+                Register as Admin
+            </label>
+            <input type="hidden" id="HiddenIsAdmin" name="IsAdmin" value="false" />
+        </div>
+
+        <div id="AdminSecretKeyContainer" style="display:none;">
+            <label asp-for="AdminSecretKey">Admin Secret Key</label>
+            <input asp-for="AdminSecretKey" class="form-input" />
+            <span asp-validation-for="AdminSecretKey" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="form-button">Register</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('IsAdminCheckbox').addEventListener('change', function () {
+        var secretKeyContainer = document.getElementById('AdminSecretKeyContainer');
+        var hiddenIsAdmin = document.getElementById('HiddenIsAdmin');
+
+        if (this.checked) {
+            secretKeyContainer.style.display = 'block';
+            hiddenIsAdmin.value = 'true';
+        } else {
+            secretKeyContainer.style.display = 'none';
+            hiddenIsAdmin.value = 'false'; 
+        }
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+        var checkbox = document.getElementById('IsAdminCheckbox');
+        var hiddenIsAdmin = document.getElementById('HiddenIsAdmin');
+
+        if (checkbox.checked) {
+            hiddenIsAdmin.value = 'true';
+        } else {
+            hiddenIsAdmin.value = 'false';
+        }
+    });
+</script>

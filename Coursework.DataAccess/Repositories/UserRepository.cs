@@ -1,4 +1,5 @@
-﻿using Coursework.Entities;
+﻿using Coursework.Abstractions.Repositories;
+using Coursework.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Coursework.DataAccess.Repositories
 {
-    public class UserRepository
+    public class UserRepository : IUserRepository
     {
         private readonly CourseworkDbContext _context;
         public UserRepository(CourseworkDbContext context)

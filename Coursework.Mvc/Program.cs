@@ -1,4 +1,3 @@
-
 using Coursework.Abstractions;
 using Coursework.Abstractions.Repositories;
 using Coursework.Abstractions.Services;
@@ -8,8 +7,7 @@ using Coursework.DataAccess.Repositories;
 using FluentValidation.AspNetCore;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
-
-//using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Coursework.Business.Validators;
@@ -23,37 +21,37 @@ var issuer = builder.Configuration.GetSection("JWTSettings:Issuer").Value;
 var audience = builder.Configuration.GetSection("JWTSettings:Audience").Value;
 var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
 
-//builder.Services.AddAuthentication(options =>
-//{
-//    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-//    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-//    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-//})
-//.AddJwtBearer(options =>
-//{
-//    options.Events = new JwtBearerEvents
-//    {
-//        OnMessageReceived = context =>
-//        {
-//            var token = context.HttpContext.Request.Cookies["jwtToken"];
-//            if (!string.IsNullOrEmpty(token))
-//            {
-//                context.Token = token;
-//            }
-//            return Task.CompletedTask;
-//        }
-//    };
-//    options.TokenValidationParameters = new TokenValidationParameters
-//    {
-//        ValidateIssuer = true,
-//        ValidIssuer = issuer,
-//        ValidateAudience = true,
-//        ValidAudience = audience,
-//        ValidateLifetime = true,
-//        IssuerSigningKey = signingKey,
-//        ValidateIssuerSigningKey = true
-//    };
-//});
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.Events = new JwtBearerEvents
+    {
+        OnMessageReceived = context =>
+        {
+            var token = context.HttpContext.Request.Cookies["jwtToken"];
+            if (!string.IsNullOrEmpty(token))
+            {
+                context.Token = token;
+            }
+            return Task.CompletedTask;
+        }
+    };
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidIssuer = issuer,
+        ValidateAudience = true,
+        ValidAudience = audience,
+        ValidateLifetime = true,
+        IssuerSigningKey = signingKey,
+        ValidateIssuerSigningKey = true
+    };
+});
 builder.Services.AddDbContext<CourseworkDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -74,6 +72,18 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddFluentValidationAutoValidation()
                  .AddFluentValidationClientsideAdapters();
 builder.Services.AddValidatorsFromAssemblyContaining<OrderValidator>();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.SameSite = SameSiteMode.Strict;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+});
+
+builder.Services.AddAntiforgery(options =>
+{
+    options.Cookie.SameSite = SameSiteMode.Strict;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+});
 
 var app = builder.Build();
 if (!app.Environment.IsDevelopment())
