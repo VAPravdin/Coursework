@@ -7,6 +7,30 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Coursework.Mvc.styles.css" asp-append-version="true" />
+    <style>
+        body {
+        font-family: 'Open Sans', sans-serif;
+        background-color: #1F2739;
+        color: #A7A1AE;
+        }
+
+        .navbar {
+        background-color: #2C3446;
+        }
+
+        .navbar-brand, .nav-link {
+        color: #4DC3FA;
+        }
+
+        .navbar-brand:hover, .nav-link:hover {
+        color: #FB667A;
+        }
+
+        footer {
+        background-color: #2C3446;
+        color: #A7A1AE;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -14,7 +38,7 @@
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Coursework.Mvc</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
@@ -25,6 +49,15 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="Index">Orders</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Service" asp-action="Index">Services</a>
+                            </li>
+                        }
                     </ul>
                     <ul class="navbar-nav ml-auto">
                         @if (User.Identity.IsAuthenticated)

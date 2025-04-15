@@ -1,0 +1,111 @@
+﻿@using Coursework.Entities
+@{
+    ViewBag.Title = "Создать заказ";
+    var services = ViewBag.Services as List<ServiceEntity>;
+}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 300;
+            line-height: 1.42em;
+            color: #A7A1AE;
+            background-color: #1F2739;
+        }
+
+        h2 {
+            color: #FFCC00;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        form {
+            background-color: #1D2D50;
+            color: #FFFFFF;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        div {
+            margin-bottom: 15px;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 10px;
+            accent-color: #FFCC00;
+        }
+
+        label {
+            font-size: 16px;
+            line-height: 1.5;
+            display: block;
+            color: #D1D1D1;
+        }
+
+        button {
+            background-color: #FFCC00;
+            color: #1D2D50;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+            button:hover {
+                background-color: #FF9900;
+            }
+
+            button:active {
+                transform: scale(0.98);
+            }
+
+        div input[type="checkbox"]:checked + label {
+            font-weight: bold;
+            color: #FFCC00;
+        }
+
+        media (max-width: 600px) {
+            form
+
+        {
+            padding: 15px;
+            margin: 10px;
+        }
+
+        button {
+            font-size: 16px;
+        }
+
+        }
+    </style>
+</head>
+<body>
+    <h2>Создать заказ</h2>
+    <form asp-action="Create" method="post">
+        <div>
+            @foreach (var service in services)
+            {
+                <div>
+                    <input type="checkbox" name="selectedServiceIds" value="@service.Id" />
+                    <label>@service.Name — @((service.DiscountPrice > 0 ? service.DiscountPrice : service.DefaultPrice).ToString("C"))</label>
+                </div>
+            }
+        </div>
+        <button type="submit">Сделать заказ</button>
+    </form>
+</body>
+</html>

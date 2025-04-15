@@ -65,6 +65,7 @@ namespace Coursework.Business.Services
         {
             var claims = new List<Claim>
             {
+                new Claim("userId", user.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
                 new Claim(ClaimTypes.Role, user.Role.ToString()),
