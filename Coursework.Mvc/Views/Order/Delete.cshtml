@@ -59,6 +59,7 @@
         <h4>Вы уверены, что хотите удалить заказ? @Model.Id @Model.Price</h4>
 
         <form asp-action="Delete" method="post">
+            @Html.AntiForgeryToken()
             <input type="hidden" asp-for="Id" />
             <button type="submit" class="btn btn-danger">Удалить</button>
             <a asp-action="Index" class="btn btn-secondary">Отмена</a>

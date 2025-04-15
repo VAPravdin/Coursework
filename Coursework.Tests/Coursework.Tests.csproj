@@ -1,18 +1,23 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-
+    <EnvironmentName>Testing</EnvironmentName>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
+
+	<PreserveCompilationContext>true</PreserveCompilationContext>
+	  
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="coverlet.collector" Version="6.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.3">
       <PrivateAssets>all</PrivateAssets>
@@ -21,6 +26,14 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     <PackageReference Include="xunit" Version="2.5.3" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Coursework.Abstractions\Coursework.Abstractions.csproj" />
+    <ProjectReference Include="..\Coursework.Business\Coursework.Business.csproj" />
+    <ProjectReference Include="..\Coursework.DataAccess\Coursework.DataAccess.csproj" />
+    <ProjectReference Include="..\Coursework.Entities\Coursework.Entities.csproj" />
+    <ProjectReference Include="..\Coursework.Mvc\Coursework.Mvc.csproj" />
   </ItemGroup>
 
   <ItemGroup>

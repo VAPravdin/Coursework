@@ -96,6 +96,7 @@
 <body>
     <h2>Создать заказ</h2>
     <form asp-action="Create" method="post">
+        @Html.AntiForgeryToken()
         <div>
             @foreach (var service in services)
             {

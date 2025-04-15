@@ -10,22 +10,43 @@ public class OrderController : Controller
     private readonly IOrderService _orderService;
     private readonly IServiceService _serviceService;
     private readonly IOrderServiceService _orderServiceService;
-
+    private readonly ILogger<OrderController> _logger;
     public OrderController(
         IOrderService orderService,
         IServiceService serviceService,
-        IOrderServiceService orderServiceService)
+        IOrderServiceService orderServiceService,
+        ILogger<OrderController> logger)
     {
         _orderService = orderService;
         _serviceService = serviceService;
         _orderServiceService = orderServiceService;
+        _logger = logger;
     }
-
     public async Task<IActionResult> Index()
     {
-        var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-        var orders = await _orderService.GetOrdersByUserIdAsync(userId);
-        return View(orders);
+        try
+        {
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null)
+            {
+                Console.WriteLine("User ID claim not found.");
+                return Unauthorized();
+            }
+
+            var userId = int.Parse(userIdClaim.Value);
+            Console.WriteLine($"Получен userId: {userId}");
+
+            var orders = await _orderService.GetOrdersByUserIdAsync(userId);
+
+            Console.WriteLine($"Найдено заказов: {orders?.Count()}");
+
+            return View(orders);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Ошибка в OrderController.Index: {ex.Message}", ex);
+            return StatusCode(500, "Внутренняя ошибка сервера.");
+        }
     }
 
     public async Task<IActionResult> Details(int id)
@@ -47,7 +68,7 @@ public class OrderController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(List<int> selectedServiceIds)
+    public async Task<IActionResult> Create(int[] selectedServiceIds)
     {
         if (!selectedServiceIds.Any())
         {

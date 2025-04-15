@@ -79,11 +79,22 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 });
 
-builder.Services.AddAntiforgery(options =>
+if (builder.Environment.IsEnvironment("Testing"))
 {
-    options.Cookie.SameSite = SameSiteMode.Strict;
-    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-});
+    builder.Services.AddAntiforgery(options =>
+    {
+        options.Cookie.SecurePolicy = CookieSecurePolicy.None;
+        options.Cookie.SameSite = SameSiteMode.Lax;
+    });
+}
+else
+{
+    builder.Services.AddAntiforgery(options =>
+    {
+        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+        options.Cookie.SameSite = SameSiteMode.Strict;
+    });
+}
 
 var app = builder.Build();
 if (!app.Environment.IsDevelopment())
