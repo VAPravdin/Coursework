@@ -1,6 +1,6 @@
 ﻿@using Coursework.Entities
 @{
-    ViewBag.Title = "Создать заказ";
+    ViewBag.Title = "Create order";
     var services = ViewBag.Services as List<ServiceEntity>;
 }
 
@@ -94,7 +94,7 @@
     </style>
 </head>
 <body>
-    <h2>Создать заказ</h2>
+    <h2>Create order</h2>
     <form asp-action="Create" method="post">
         @Html.AntiForgeryToken()
         <div>
@@ -106,7 +106,7 @@
                 </div>
             }
         </div>
-        <button type="submit">Сделать заказ</button>
+        <button type="submit">Make an order</button>
     </form>
 </body>
 </html>

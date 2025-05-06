@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Coursework.Abstractions.Services;
 using Coursework.Entities;
+using System.Text.Json;
+using System.Text;
 
 [Authorize]
 public class OrderController : Controller
@@ -72,7 +74,7 @@ public class OrderController : Controller
     {
         if (!selectedServiceIds.Any())
         {
-            ModelState.AddModelError("", "Выберите хотя бы один сервис.");
+            ModelState.AddModelError("", "Select at least one service.");
             ViewBag.Services = await _serviceService.GetAllAsync();
             return View();
         }
@@ -113,4 +115,34 @@ public class OrderController : Controller
         await _orderService.DeleteOrderAsync(id);
         return RedirectToAction(nameof(Index));
     }
+    [HttpGet]
+    public async Task<IActionResult> DownloadJson(int id)
+    {
+        var order = await _orderService.GetOrderByIdAsync(id);
+        if (order == null) return NotFound();
+
+        var services = await _orderServiceService.GetServicesByOrderIdAsync(id);
+
+        var data = new
+        {
+            order.Id,
+            order.OrderDate,
+            order.Price,
+            Services = services.Select(s => new
+            {
+                s.Id,
+                s.Name,
+                s.DiscountPrice
+            })
+        };
+
+        var json = JsonSerializer.Serialize(data, new JsonSerializerOptions
+        {
+            WriteIndented = true
+        });
+
+        var bytes = Encoding.UTF8.GetBytes(json);
+        return File(bytes, "application/json", $"order_{order.Id}.json");
+    }
+
 }

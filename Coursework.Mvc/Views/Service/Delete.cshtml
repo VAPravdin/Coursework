@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Удалить сервис</title>
+    <title>Delete service</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
     <style>
         body {
@@ -53,15 +53,15 @@
 </head>
 <body>
 
-    <h1>Удалить сервис?</h1>
+    <h1>Delete service?</h1>
 
     <div class="confirmation-container">
-        <h4>Вы уверены, что хотите удалить сервис? @Model.Name @Model.Description?</h4>
+        <h4>Are you sure? @Model.Name @Model.Description?</h4>
 
         <form asp-action="Delete" method="post">
             <input type="hidden" asp-for="Id" />
-            <button type="submit" class="btn btn-danger">Удалить</button>
-            <a asp-action="Index" class="btn btn-secondary">Отмена</a>
+            <button type="submit" class="btn btn-danger">Delete</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
         </form>
     </div>
 

@@ -1,14 +1,14 @@
 ﻿@using Coursework.Entities
 @model IEnumerable<OrderEntity>
 @{
-    ViewBag.Title = "Мои заказы";
+    ViewBag.Title = "My orders";
 }
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Список волонтеров</title>
+    <title>Order list</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
     <style>
         body {
@@ -119,14 +119,14 @@
 </head>
 <body>
 
-<h2>Мои заказы</h2>
+<h2>My orders</h2>
 
 <table>
     <thead>
         <tr>
             <th>ID</th>
-            <th>Дата</th>
-            <th>Цена</th>
+            <th>Date</th>
+            <th>Price</th>
             <th></th>
         </tr>
     </thead>
@@ -138,9 +138,10 @@
                 <td>@order.OrderDate.ToShortDateString()</td>
                 <td>@order.Price.ToString("C")</td>
                     <td>
-                        <a asp-action="Details" asp-route-id="@order.Id" class="action-link">Подробнее</a> |
+                        <a asp-action="Details" asp-route-id="@order.Id" class="action-link">Details</a> |
+                        <a asp-action="DownloadJson" asp-route-id="@order.Id" class="action-link">Download</a> |
                         <form asp-action="Delete" asp-route-id="@order.Id" method="post" style="display:inline;">
-                            <button type="submit" class="action-link" onclick="return confirm('Удалить заказ?')">Удалить</button>
+                            <button type="submit" class="action-link" onclick="return confirm('Delete order?')">Delete</button>
                         </form>
                     </td>
             </tr>
@@ -148,6 +149,6 @@
     </tbody>
 </table>
 
-<a asp-action="Create">Создать заказ</a>
+<a asp-action="Create">Create order</a>
 </body>
 </html>

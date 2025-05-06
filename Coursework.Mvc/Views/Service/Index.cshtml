@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Список сервисов</title>
+    <title>Services list</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
     <style>
         body {
@@ -120,15 +120,15 @@
 </head>
 <body>
 
-    <h1>Список сервисов</h1>
+    <h1>Services list</h1>
 
     <table class="container">
         <thead>
             <tr>
-                <th>Название</th>
-                <th>Начальная цена</th>
-                <th>Скидочная</th>
-                <th>Действия</th>
+                <th>Name</th>
+                <th>Default price</th>
+                <th>Discount price</th>
+                <th>Actions</th>
             </tr>
         </thead>
         @{
@@ -142,14 +142,14 @@
                     <td>@service.DefaultPrice</td>
                     <td>@service.DiscountPrice</td>
                     <td>
-                        <a asp-action="Details" asp-route-id="@service.Id" class="action-link">Просмотр</a>
-                        @if (User.IsInRole("admin") || service.UserId == currentUserId)
+                        <a asp-action="Details" asp-route-id="@service.Id" class="action-link">Details</a>
+                        @if (User.IsInRole("Admin") || service.UserId == currentUserId)
                         {
-                            <a asp-action="Delete" asp-route-id="@service.Id" class="action-link">Удалить</a>
+                            <a asp-action="Delete" asp-route-id="@service.Id" class="action-link">Delete</a>
                         }
                         else
                         {
-                            <span>Нет доступа</span>
+                            <span>No permission</span>
                         }
                     </td>
                 </tr>
@@ -157,7 +157,7 @@
         </tbody>
     </table>
 
-    <a asp-action="Create" class="btn">Добавить сервис</a>
+    <a asp-action="Create" class="btn">Add service</a>
 
 </body>
 </html>

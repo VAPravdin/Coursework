@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Детали сервиса</title>
+    <title>Service details</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
     <style>
         body {
@@ -70,18 +70,17 @@
 </head>
 <body>
 
-    <h1>Детали сервиса</h1>
+    <h1>Service details</h1>
 
     <div class="service-details">
         <h4>@Model.Name</h4>
-        <p>Начальная цена: @Model.DefaultPrice</p>
-        <p>Скидочная цена: @Model.DiscountPrice</p>
-        <p>Описание: @Model.Description</p>
+        <p>Default Price: @Model.DefaultPrice</p>
+        <p>Discount Price: @Model.DiscountPrice</p>
+        <p>Description: @Model.Description</p>
     </div>
 
     <div>
-        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-secondary">Редактировать</a>
-        <a asp-action="Index" class="btn btn-primary">Назад к списку</a>
+        <a asp-action="Index" class="btn btn-primary">Back to list</a>
     </div>
 
 </body>

@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Удалить заказ</title>
+    <title>Delete order</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
     <style>
         body {
@@ -53,16 +53,16 @@
 </head>
 <body>
 
-    <h1>Удалить заказ?</h1>
+    <h1>Delete order?</h1>
 
     <div class="confirmation-container">
-        <h4>Вы уверены, что хотите удалить заказ? @Model.Id @Model.Price</h4>
+        <h4>Are you sure? @Model.Id @Model.Price</h4>
 
         <form asp-action="Delete" method="post">
             @Html.AntiForgeryToken()
             <input type="hidden" asp-for="Id" />
-            <button type="submit" class="btn btn-danger">Удалить</button>
-            <a asp-action="Index" class="btn btn-secondary">Отмена</a>
+            <button type="submit" class="btn btn-danger">Delete</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
         </form>
     </div>
 
