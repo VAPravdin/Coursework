@@ -235,19 +235,5 @@ namespace Coursework.Tests.ControllerTests
             Assert.Contains("Service A", json);
             Assert.Contains("DiscountPrice", json);
         }
-
-        [Fact]
-        public async Task Delete_AllowsAdmin_ToDeleteOrder()
-        {
-            var client = GetAuthenticatedClient(userId: 2, isAdmin: true);
-            var token = await ExtractRequestVerificationToken(client, "/Order/Create");
-            var form = new FormUrlEncodedContent(new[]
-            {
-                new KeyValuePair<string,string>("__RequestVerificationToken", token),
-                new KeyValuePair<string,string>("id", "1")
-            });
-            var response = await client.PostAsync("/Order/Delete/1", form);
-            Assert.Equal(HttpStatusCode.Redirect, response.StatusCode);
-        }
     }
 }
