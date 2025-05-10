@@ -21,7 +21,7 @@ jobs:
       - name: Set up .NET
         uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: '8.0' 
+          dotnet-version: '9.0' 
           
       - name: Restore dependencies
         run: dotnet restore
@@ -35,4 +35,7 @@ jobs:
         run: dotnet format ./Coursework.sln --verify-no-changes
 
       - name: Run tests
+        env:
+            ASPNETCORE_ENVIRONMENT: Testing
+            ConnectionStrings__DefaultConnection: "DataSource=:memory:"
         run: dotnet test ./Coursework.Tests/Coursework.Tests.csproj
