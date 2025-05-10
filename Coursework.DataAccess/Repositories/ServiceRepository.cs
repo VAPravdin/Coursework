@@ -39,7 +39,7 @@ namespace Coursework.DataAccess.Repositories
         public async Task<IEnumerable<ServiceEntity>> GetPopularServicesAsync(int count)
         {
             return await _context.Services
-                .OrderByDescending(s => s.OrderServices.Count) 
+                .OrderByDescending(s => s.OrderServices.Count)
                 .Take(count)
                 .ToListAsync();
         }

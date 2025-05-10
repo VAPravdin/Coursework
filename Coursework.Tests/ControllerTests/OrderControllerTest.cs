@@ -100,7 +100,7 @@ namespace Coursework.Tests.ControllerTests
 
             return client;
         }
-        
+
         private string GenerateJwtToken(int userId, string role)
         {
             var claims = new[]
@@ -193,7 +193,7 @@ namespace Coursework.Tests.ControllerTests
         [Fact]
         public async Task Delete_RemovesOrder_WhenUserIsOwner()
         {
-            var client = GetAuthenticatedClient(userId: 1); 
+            var client = GetAuthenticatedClient(userId: 1);
 
             var antiforgeryToken = await ExtractRequestVerificationToken(client, "/Order/Create");
 
@@ -216,10 +216,10 @@ namespace Coursework.Tests.ControllerTests
         {
             var client = GetAuthenticatedClient(userId: 2);
             var antiforgeryToken = await ExtractRequestVerificationToken(client, "/Order/Create");
-            var response = await client.PostAsync("/Order/Delete/1", new FormUrlEncodedContent(new[] 
-            { 
-                new KeyValuePair<string, string>("__RequestVerificationToken", 
-                antiforgeryToken), new KeyValuePair<string, string>("id", "1") 
+            var response = await client.PostAsync("/Order/Delete/1", new FormUrlEncodedContent(new[]
+            {
+                new KeyValuePair<string, string>("__RequestVerificationToken",
+                antiforgeryToken), new KeyValuePair<string, string>("id", "1")
             }));
             Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
         }

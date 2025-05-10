@@ -26,7 +26,7 @@ namespace Coursework.DataAccess.Configurations
                 .HasOne(x => x.User)
                 .WithMany(x => x.Orders)
                 .HasForeignKey(x => x.UserId)
-                .OnDelete(DeleteBehavior.Restrict); 
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .HasMany(x => x.OrderServices)
