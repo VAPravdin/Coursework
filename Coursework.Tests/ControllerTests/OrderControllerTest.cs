@@ -53,10 +53,10 @@ namespace Coursework.Tests.ControllerTests
                     {
                         services.Remove(descriptor);
                     }
-
+                    var databaseName = $"TestDb_{Guid.NewGuid()}";
                     services.AddDbContext<CourseworkDbContext>(options =>
                     {
-                        options.UseInMemoryDatabase("TestDatabase");
+                        options.UseInMemoryDatabase(databaseName);
                     });
 
                     var sp = services.BuildServiceProvider();
@@ -222,6 +222,32 @@ namespace Coursework.Tests.ControllerTests
                 antiforgeryToken), new KeyValuePair<string, string>("id", "1") 
             }));
             Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task DownloadJson_ReturnsFile_WithCorrectContent()
+        {
+            var client = GetAuthenticatedClient(userId: 1);
+            var response = await client.GetAsync("/Order/DownloadJson/1");
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal("application/json", response.Content.Headers.ContentType.MediaType);
+            var json = await response.Content.ReadAsStringAsync();
+            Assert.Contains("Service A", json);
+            Assert.Contains("DiscountPrice", json);
+        }
+
+        [Fact]
+        public async Task Delete_AllowsAdmin_ToDeleteOrder()
+        {
+            var client = GetAuthenticatedClient(userId: 2, isAdmin: true);
+            var token = await ExtractRequestVerificationToken(client, "/Order/Create");
+            var form = new FormUrlEncodedContent(new[]
+            {
+                new KeyValuePair<string,string>("__RequestVerificationToken", token),
+                new KeyValuePair<string,string>("id", "1")
+            });
+            var response = await client.PostAsync("/Order/Delete/1", form);
+            Assert.Equal(HttpStatusCode.Redirect, response.StatusCode);
         }
     }
 }
